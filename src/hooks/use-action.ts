@@ -27,18 +27,16 @@ export const useAction = <TInput, TOutput>(action: Action<TInput, TOutput>, opti
                 return
             }
 
-            if (result.fieldErrors) {
-                return setFieldErrors(result.fieldErrors)
-            }
+            setFieldErrors(result.fieldErrors)
 
             if (result.error) {
                 options?.onError?.(result.error)
-                return setError(result.error)
+                setError(result.error)
             }
 
             if (result.data) {
                 options?.onSuccess?.(result.data)
-                return setData(result.data)
+                setData(result.data)
             }
 
         } finally {
@@ -47,5 +45,5 @@ export const useAction = <TInput, TOutput>(action: Action<TInput, TOutput>, opti
         }
     }, [action, options])
 
-    return { execute, fieldErrors, error, isLoading , data}
+    return { execute, fieldErrors, error, isLoading, data }
 }
