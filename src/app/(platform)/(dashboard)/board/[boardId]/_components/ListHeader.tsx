@@ -2,7 +2,7 @@
 
 import { ElementRef, useRef, useState } from "react"
 import { List } from "@prisma/client"
-import { useEventListener, useOnClickOutside } from "usehooks-ts"
+import { useEventListener } from "usehooks-ts"
 import FormInput from "@/components/form/FormInput"
 import { useAction } from "@/hooks/use-action"
 import { updateList } from "@/actions/update-list"
@@ -10,10 +10,11 @@ import { toast } from "sonner"
 import ListOptions from "./ListOptions"
 
 interface ListHeaderProps {
-    data: List
+    data: List;
+    onAddCard: ()=> void
 }
 
-const ListHeader: React.FC<ListHeaderProps> = ({ data }) => {
+const ListHeader: React.FC<ListHeaderProps> = ({ data, onAddCard }) => {
     const [title, setTitle] = useState(data.title);
     const [isEditing, setIsEditing] = useState(false);
 
@@ -86,7 +87,7 @@ const ListHeader: React.FC<ListHeaderProps> = ({ data }) => {
                 <h5 className="w-full text-sm px-2.5 py-1 h-7 font-medium border-transparent">{title}</h5>
             </div>
 
-            <ListOptions data={data} onAddCard={()=> {}} />
+            <ListOptions data={data} onAddCard={onAddCard} />
         </div>
     )
 }

@@ -10,7 +10,7 @@ interface ListContainerProps {
     data: ListWithCards[]
 }
 
-const ListContainer: React.FC<ListContainerProps> = ({ boardId, data }) => {
+const ListContainer: React.FC<ListContainerProps> = ({ data }) => {
 
     const [orderedData, setOrderedData] = useState(data);
 
