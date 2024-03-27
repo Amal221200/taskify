@@ -5,7 +5,7 @@ import React from 'react'
 const PlatformLayout = ({ children }: { children: React.ReactNode }) => {
     return (
         <ClerkProvider>
-            <Toaster />
+            <Toaster  />
             {children}
         </ClerkProvider>
     )
