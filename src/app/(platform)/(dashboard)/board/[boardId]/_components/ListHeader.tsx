@@ -7,6 +7,7 @@ import FormInput from "@/components/form/FormInput"
 import { useAction } from "@/hooks/use-action"
 import { updateList } from "@/actions/update-list"
 import { toast } from "sonner"
+import ListOptions from "./ListOptions"
 
 interface ListHeaderProps {
     data: List
@@ -67,7 +68,7 @@ const ListHeader: React.FC<ListHeaderProps> = ({ data }) => {
     }
 
     useEventListener("keydown", onKeyDown)
-    
+
     if (isEditing) {
         return (
             <form ref={formRef} action={onSubmitting}>
@@ -80,8 +81,12 @@ const ListHeader: React.FC<ListHeaderProps> = ({ data }) => {
     }
 
     return (
-        <div onClick={enableEditing} className="pt-2 px-2 text-sm font-semibold flex justify-center items-start gap-x-2">
-            <h5 className="w-full text-sm px-2.5 py-1 h-7 font-medium border-transparent">{title}</h5>
+        <div className="pt-2 px-2 flex justify-between items-start- gap-x-2">
+            <div onClick={enableEditing} className="pt-2 px-2 text-sm font-semibold flex justify-center items-start gap-x-2">
+                <h5 className="w-full text-sm px-2.5 py-1 h-7 font-medium border-transparent">{title}</h5>
+            </div>
+
+            <ListOptions data={data} onAddCard={()=> {}} />
         </div>
     )
 }
