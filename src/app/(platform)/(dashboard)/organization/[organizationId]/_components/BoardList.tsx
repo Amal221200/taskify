@@ -6,6 +6,8 @@ import { auth } from "@clerk/nextjs"
 import { HelpCircle, User2 } from "lucide-react"
 import Link from "next/link"
 import { redirect } from "next/navigation"
+import { MAX_FREE_BOARDS } from "@/constants/boards"
+import { getAvailableCount } from "@/lib/org-limit"
 
 
 const BoardList = async () => {
@@ -16,6 +18,8 @@ const BoardList = async () => {
     }
     const boards = await db.board.findMany({ where: { orgId }, orderBy: { createdAt: "desc" } });
 
+    const availalabeCount = await getAvailableCount()
+   
     return (
         <div className="space-y-4">
             <div className="flex items-center font-semibold text-lg text-neutral-700">
@@ -33,7 +37,7 @@ const BoardList = async () => {
                 <FormPopover sideOffset={10} side="right">
                     <div role="button" className="aspect-video relative h-full w-full bg-muted rounded-sm flex flex-col gap-y-1 items-center justify-center hover:opacity-75 transition">
                         <p className="text-sm">Create new board</p>
-                        <span className="text-xs">5 remaining</span>
+                        <span className="text-xs">{MAX_FREE_BOARDS - availalabeCount} remaining</span>
                         <Hint sideOffset={40} description={`
                         Free Workspaces can have up to 5 open boards.
                         For unlimited boards upgrade this workspace.
@@ -47,17 +51,17 @@ const BoardList = async () => {
     )
 }
 
-BoardList.Skeleton = function SkeletonBoardList(){
+BoardList.Skeleton = function SkeletonBoardList() {
     return (
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-            <Skeleton className="aspect-video h-full w-full p-2"/>
-            <Skeleton className="aspect-video h-full w-full p-2"/>
-            <Skeleton className="aspect-video h-full w-full p-2"/>
-            <Skeleton className="aspect-video h-full w-full p-2"/>
-            <Skeleton className="aspect-video h-full w-full p-2"/>
-            <Skeleton className="aspect-video h-full w-full p-2"/>
-            <Skeleton className="aspect-video h-full w-full p-2"/>
-            <Skeleton className="aspect-video h-full w-full p-2"/>
+            <Skeleton className="aspect-video h-full w-full p-2" />
+            <Skeleton className="aspect-video h-full w-full p-2" />
+            <Skeleton className="aspect-video h-full w-full p-2" />
+            <Skeleton className="aspect-video h-full w-full p-2" />
+            <Skeleton className="aspect-video h-full w-full p-2" />
+            <Skeleton className="aspect-video h-full w-full p-2" />
+            <Skeleton className="aspect-video h-full w-full p-2" />
+            <Skeleton className="aspect-video h-full w-full p-2" />
         </div>
     )
 }
