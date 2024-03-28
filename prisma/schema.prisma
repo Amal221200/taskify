@@ -43,7 +43,7 @@ model List {
   board   Board  @relation(fields: [boardId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
-  updateAt  DateTime @updatedAt
+  updatedAt  DateTime @updatedAt
   cards     Card[]
 
   @@index([boardId])
@@ -56,7 +56,7 @@ model Card {
   description String? @db.Text
 
   createdAt DateTime @default(now())
-  updateAt  DateTime @updatedAt
+  updatedAt  DateTime @updatedAt
 
   listId String
   list   List   @relation(fields: [listId], references: [id], onDelete: Cascade)
