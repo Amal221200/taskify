@@ -5,8 +5,8 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { useAction } from "@/hooks/use-action"
 import { CardWithList } from "@/types"
 import { Copy, Trash } from "lucide-react"
-import { copyCard } from "../copy-card"
-import { deleteCard } from "../delete-card"
+import { copyCard } from "../../../actions/copy-card"
+import { deleteCard } from "../../../actions/delete-card"
 import { useQueryClient } from "@tanstack/react-query"
 import { toast } from "sonner"
 import { useParams } from "next/navigation"
@@ -26,6 +26,9 @@ const Actions = ({ data }: ActionsProps) => {
             queryClient.invalidateQueries({
                 queryKey: ["card", data.id],
             })
+            queryClient.invalidateQueries({
+                queryKey: ["card-logs", data.id],
+            })
             toast.success(`Card "${data.title}" copied`)
             onOpen(data.id)
         },
@@ -39,6 +42,11 @@ const Actions = ({ data }: ActionsProps) => {
             queryClient.invalidateQueries({
                 queryKey: ["card", data.id],
             })
+
+            queryClient.invalidateQueries({
+                queryKey: ["card-logs", data.id],
+            })
+            
             toast.success(`Card "${data.title}" deleted`)
             onClose()
         },

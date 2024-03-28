@@ -32,6 +32,9 @@ const Description = ({ data }: DescriptionProps) => {
             queryClient.invalidateQueries({
                 queryKey:["card", data.id]
             })
+            queryClient.invalidateQueries({
+                queryKey:["card-logs", data.id]
+            })
             setDescription(data.description)
             setIsEditing(false)
             toast.success(`Description for card "${data.title}" updated`)

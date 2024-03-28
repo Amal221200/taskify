@@ -14,10 +14,6 @@ datasource db {
   relationMode = "prisma"
 }
 
-model User {
-  id String @id @default(uuid())
-}
-
 model Board {
   id            String @id @default(uuid())
   orgId         String
@@ -43,7 +39,7 @@ model List {
   board   Board  @relation(fields: [boardId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  updatedAt DateTime @updatedAt
   cards     Card[]
 
   @@index([boardId])
@@ -56,10 +52,38 @@ model Card {
   description String? @db.Text
 
   createdAt DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  updatedAt DateTime @updatedAt
 
   listId String
   list   List   @relation(fields: [listId], references: [id], onDelete: Cascade)
 
   @@index([listId])
+}
+
+enum ACTION {
+  CREATE
+  UPDATE
+  DELETE
+  COPY
+}
+
+enum ENTITY_TYPE {
+  BOARD
+  LIST
+  CARD
+}
+
+model AuditLog {
+  id          String      @id @default(uuid())
+  orgId       String
+  action      ACTION
+  entityId    String
+  entityType  ENTITY_TYPE
+  entityTitle String
+  userId      String
+  userImage   String      @db.Text
+  userName    String      @db.Text
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

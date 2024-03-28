@@ -27,7 +27,9 @@ const Header = ({ data }: HeaderProps) => {
             queryClient.invalidateQueries({
                 queryKey: ["card", data.id]
             })
-
+            queryClient.invalidateQueries({
+                queryKey: ["card-logs", data.id]
+            })
             setTitle(data.title)
             toast.success(`Card "${data.title}" updated`)
         },

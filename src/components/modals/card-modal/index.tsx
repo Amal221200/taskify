@@ -10,15 +10,22 @@ import Header from "./header"
 import { fetcher } from "@/lib/fetcher"
 import { CardWithList } from "@/types"
 import Description from "./description"
-import Actions from "@/actions/update-card/actions"
+import Actions from "@/components/modals/card-modal/actions"
+import { AuditLog } from "@prisma/client"
+import Activity from "./activity"
 
 
 const CardModal = () => {
     const { id, isOpen, onClose } = useCardModal()
 
-    const { data: cardData, isLoading, isSuccess } = useQuery<CardWithList>({
+    const { data: cardData } = useQuery<CardWithList>({
         queryKey: ["card", id],
         queryFn: () => fetcher(`/api/card/${id}`)
+    })
+
+    const { data: cardLogs } = useQuery<AuditLog[]>({
+        queryKey: ["card-logs", id],
+        queryFn: () => fetcher(`/api/card/${id}/logs`)
     })
 
     return (
@@ -35,16 +42,16 @@ const CardModal = () => {
                     <div className="col-span-3">
                         <div className="w-full space-y-6">
                             {cardData ? <Description data={cardData} /> : <Description.Skeleton />}
+                            {cardData && cardLogs ? <Activity data={cardLogs} /> : <Activity.Skeleton />}
                         </div>
                     </div>
                     {
-                        cardData
-                            ?
-                            <Actions data={cardData} />
-                            :
-                            <Actions.Skeleton />
+                        cardData ? <Actions data={cardData} /> : <Actions.Skeleton />
                     }
+
+
                 </div>
+
             </DialogContent>
         </Dialog>
     )
