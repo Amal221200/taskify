@@ -3,7 +3,7 @@
 import { Skeleton } from "@/components/ui/skeleton"
 import { AuditLog } from "@prisma/client"
 import { ActivityIcon } from "lucide-react"
-import ActivityItem from "./activity-item"
+import ActivityItem from "../../ActivityItem"
 
 interface ActivityProps {
     data: AuditLog[]
